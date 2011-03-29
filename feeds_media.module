@@ -44,6 +44,7 @@ function feeds_media_set_target($source, $entity, $target, $values) {
   // TODOs:
   // XXX Other media than youtube videos
   // XXX Cardinalities different from 0
+  // XXX Don't ignore uid setting
   // XXX Error handling
   //
   
