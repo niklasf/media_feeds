@@ -1,0 +1,57 @@
+<?php
+// $Id$
+
+/**
+ * @file
+ * Implementing the Feeds mapping API for the Media module.
+ */
+
+/**
+ * Implements hook_feeds_processor_targets_alter().
+ */
+function feeds_media_feeds_processor_targets_alter(&$targets, $entity_type, $bundle_name) {
+  foreach (field_info_instances($entity_type, $bundle_name) as $name => $instance) {
+    $info = field_info_field($name);
+    
+    if ($info['type'] == 'media') {
+      $targets[$name] = array(
+        'name' => $instance['label'],
+        'callback' => 'feeds_media_set_target',
+        'description' => t('The @label field of the node.', array('@label' => $instance['label'])),
+      );
+    }
+  }
+  
+  drupal_set_message('<pre>' . print_r(node_load(98), TRUE) . '</pre>');
+}
+
+/**
+ * Callback for mapping.
+ */
+function feeds_media_set_target($source, $entity, $target, $values) {
+  if (empty($values)) {
+    return;
+  }
+  
+  if (!is_array($values)) {
+    $values = array($values);
+  }
+  
+  //
+  // What works:
+  // - Basic youtube video integration
+  //
+  // TODOs:
+  // XXX Other media than youtube videos
+  // XXX Cardinalities different from 0
+  // XXX Error handling
+  //
+  
+  foreach ($values as $value) {
+    $uri = media_youtube_media_parse($value);
+    if ($uri) {
+      $file = file_save(file_uri_to_object($uri, TRUE));
+      $entity->{$target}['und'][0]['fid'] = $file->fid;
+    }
+  }
+}
