@@ -62,11 +62,13 @@ function media_feeds_set_internet_target($source, $entity, $target, $values) {
       }
 
       // Existing providers fail validation if files already exist.
-      // That is bad because now we cant validate existing files.
+      // That is bad because now we can't validate existing files.
       // However, most providers don't do anything else in validate.
       // @todo: Solve this. If this problem is solved we can and should call
       // validate before the first $provider->getFileObject() even if the
       // file is existing.
+      // There is an issue for this in the media module's issue queue:
+      // http://drupal.org/node/1121808
       if (!$file || $file->is_new) {
         $provider->validate();
         $file = $provider->getFileObject();
