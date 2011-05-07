@@ -1,10 +1,10 @@
-; $Id$
-name = Feeds Media integration
+
+name = Media Feeds integration
 description = "Enable mapping imported sources to media fields."
 core = 7.x
-package = Feeds
+package = Media
 
 dependencies[] = feeds
 dependencies[] = media
 
-files[] = feeds_media.module
+files[] = media_feeds.module
