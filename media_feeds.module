@@ -24,7 +24,7 @@ function media_feeds_feeds_processor_targets_alter(&$targets, $entity_type, $bun
 
 /**
  * Callback for mapping an URL or embed code to a field using media_internet.
- * The actual mapping happens here. 
+ * The actual mapping happens here.
  */
 function media_feeds_set_internet_target($source, $entity, $target, $values) {
   if (empty($values)) {
@@ -53,7 +53,7 @@ function media_feeds_set_internet_target($source, $entity, $target, $values) {
           ->execute();
 
         if ($existing && isset($existing['file']) && is_array($existing['file'])) {
-          foreach($existing['file'] as $fid => $object) {
+          foreach ($existing['file'] as $fid => $object) {
             $file->fid = $object->fid;
             $file->is_new = FALSE;
             break;
