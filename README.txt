@@ -24,8 +24,8 @@ Issue queue:
  * You want to enable at least one media_internet provider.
    For example media_youtube.
 
- * That's it. Really. But note that there are also parsers for feeds that might
-   be useful. For example feeds_youtube.
+ * That's it. But note that there are also parsers for feeds that might be
+   useful. For example feeds_youtube.
 
 -- CONFIGURATION --
 
