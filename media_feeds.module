@@ -97,8 +97,16 @@ function media_feeds_set_internet_target($source, $entity, $target, $values) {
       }
 
       // Validate the URI scheme
+      // If public is allowed also allow schemes supported by
+      // MediaInternetFileHandler (http, ...)
+      if (!empty($allowed_schemes['public'])) {
+        $fromurlschemes = media_variable_get('fromurl_supported_schemes');
+        foreach ($fromurlschemes as $fromurlscheme) {
+          $allowed_schemes[$fromurlscheme] = $fromurlscheme;
+        }
+      }
       $scheme = file_uri_scheme($file->uri);
-      if (!isset($allowed_schemes[$scheme]) || !$allowed_schemes[$scheme]) {
+      if (empty($allowed_schemes[$scheme])) {
         drupal_set_message(t('Scheme %scheme not allowed for %target.', array('%scheme' => $scheme . '://', '%target' => $target)), 'error');
         continue;
       }
