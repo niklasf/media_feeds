@@ -21,15 +21,15 @@ Issue queue:
    See:
      http://drupal.org/documentation/install/modules-themes/modules-7
 
- * You want to enable at least one media_internet provider.
-   For example media_youtube.
+ * You can install available media_internet provider modules, if you need more
+   sources than the basic ones. For example media_youtube.
 
- * That's it. But note that there are also parsers for feeds that might be
+ * Note that there are also parsers for feeds that might be
    useful. For example feeds_youtube.
 
 -- CONFIGURATION --
 
-Create your feed importer as you use to. If your target as a media field you'll
+Create your feed importer as you use to. If your target is a media field you'll
 notice that you can now select that field as a target.
 
 -- CONTACT --
