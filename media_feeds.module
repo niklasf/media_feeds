@@ -111,9 +111,18 @@ function media_feeds_set_internet_target($source, $entity, $target, $values) {
         continue;
       }
 
+      // Save file
+      $file = $provider->save();
+      if (!$file) {
+        drupal_set_message(t('Failed to save file.'));
+        continue;
+      }
+      
       // Apply author settings to the file
-      $file->uid = $entity->uid;
-      $file = file_save($file);
+      if ((empty($file->uid) && !empty($entity->uid)) || $file->uid != $entity->uid) {
+        $file->uid = $entity->uid;
+        $file = file_save($file);
+      }
 
       // Attach the file to the field
       $field[LANGUAGE_NONE][]['fid'] = $file->fid;
