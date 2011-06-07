@@ -88,9 +88,11 @@ function media_feeds_set_internet_target($source, $entity, $target, $values) {
       $allowed_schemes = $instance['widget']['settings']['allowed_schemes'];
 
       // Validate the type
-      $type = media_get_type($file);
-      if (!isset($allowed_types[$type]) || !$allowed_types[$type]) {
-        drupal_set_message(t('Type %type not allowed for %target.', array('%type' => $type, '%target' => $target)), 'error');
+      $errors = media_file_validate_types($file, $allowed_types);
+      if (count($errors)) {
+        foreach ($errors as $error) {
+          drupal_set_message($error, 'error');
+        }
         continue;
       }
 
