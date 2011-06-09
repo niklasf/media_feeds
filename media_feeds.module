@@ -96,7 +96,7 @@ function media_feeds_set_internet_target($source, $entity, $target, $values) {
       $errors = media_file_validate_types($file, $allowed_types);
       if (count($errors)) {
         foreach ($errors as $error) {
-          drupal_set_message($error, 'error');
+          drupal_set_message(filter_xss($error), 'error');
         }
         continue;
       }
