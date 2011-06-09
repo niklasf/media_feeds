@@ -1,0 +1,68 @@
+<?php
+
+/**
+ * @file
+ * Test case for the Feeds mapping API for the media module. 
+ */
+
+/**
+ * Class for testing the Media Feeds media_internet mapper.
+ */
+class FeedsMapperMediaTestCase extends FeedsMapperTestCase {
+
+  public static function getInfo() {
+    return array(
+      'name' => 'Mapper: Media',
+      'description' => 'Test Feeds Mapper support for Media fields.',
+      'group' => 'Feeds',
+      'dependencies' => array('media_feeds'),
+    );
+  }
+
+  /**
+   * Set up the test.
+   */
+  public function setUp() {
+    // Call parent setup with the required module
+    parent::setUp(array('media_feeds', 'media_feeds_test'));
+  }
+
+  /**
+   * Basic test loading a single entry CSV file.
+   */
+  public function test() {
+    // Create a content type with a media field
+    $contentType = $this->createContentType(NULL, array(
+      'alpha' => array(
+        'type' => 'media',
+        'widget' => 'media_generic',
+      ),
+    ));
+
+    // Create a CSV importer configuration
+    $this->createImporterConfiguration('Node import from CVS', 'node');
+    $this->setPlugin('node', 'FeedsCSVParser');
+    $this->setSettings('node', 'FeedsNodeProcessor', array('content_type' => $contentType));
+    $this->addMappings('node', array(
+      array(
+        'source' => 'title',
+        'target' => 'title',
+      ),
+      array(
+        'source' => 'file',
+        'target' => 'field_alpha',
+      ),
+    ));
+    $edit = array(
+      'content_type' => '',
+    );
+    $this->drupalPost('admin/structure/feeds/edit/node/settings', $edit, 'Save');
+
+    // Import
+    $edit = array(
+      'feeds[FeedsHTTPFetcher][source]' => url('testing/media_feeds/feed.csv', array('absolute' => TRUE)),
+    );
+    $this->drupalPost('import/node', $edit, 'Import');
+    $this->assertText('Created 1 node');
+  }
+}
