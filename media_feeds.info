@@ -1,4 +1,3 @@
-
 name = Media Feeds integration
 description = "Enable mapping imported sources to media fields."
 core = 7.x
