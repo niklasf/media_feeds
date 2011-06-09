@@ -10,6 +10,9 @@
  */
 class FeedsMapperMediaTestCase extends FeedsMapperTestCase {
 
+  /**
+   * Add this test case to the Feeds group.
+   */
   public static function getInfo() {
     return array(
       'name' => 'Mapper: Media',
@@ -20,13 +23,18 @@ class FeedsMapperMediaTestCase extends FeedsMapperTestCase {
   }
 
   /**
-   * Set up the test.
+   * Set up the required modules.
    */
   public function setUp() {
     // Call parent setup with the required module
     parent::setUp(array('media_feeds', 'media_feeds_test'));
+  }
 
-    // Create user and login
+  /**
+   * Basic test importing a sample feed.
+   */
+  public function test() {
+    // Create a user with the appropriate permissions
     $this->drupalLogin($this->drupalCreateUser(
       array(
         'administer content types',
@@ -39,13 +47,27 @@ class FeedsMapperMediaTestCase extends FeedsMapperTestCase {
         'bypass node access',
       )
     ));
+    
+    // Import sample feed
+    $this->importSampleFeed();
+    
+    // Assert: Media correctly attached
+    $entities = db_select('feeds_item')
+      ->fields('feeds_item', array('entity_id'))
+      ->condition('id', 'node')
+      ->execute();
+    foreach ($entities as $entity) {
+      $this->drupalGet('node/' . $entity->entity_id . '/edit');
+      $this->assertRaw('sample.png');
+    }
   }
 
   /**
-   * Basic test loading a single entry CSV file.
+   * Creates a content type with a media field, a feed importer and imports
+   * a sample feed.
    */
-  public function test() {
-    // Create a content type with a media field
+  public function importSampleFeed() {
+    // Create a content type with a media field.
     $contentType = $this->createContentType(NULL, array(
       'alpha' => array(
         'type' => 'media',
@@ -53,7 +75,7 @@ class FeedsMapperMediaTestCase extends FeedsMapperTestCase {
       ),
     ));
 
-    // Create a CSV importer configuration
+    // Create a CSV importer configuration.
     $this->createImporterConfiguration('Node import from CVS', 'node');
     $this->setPlugin('node', 'FeedsCSVParser');
     $this->setSettings('node', 'FeedsNodeProcessor', array('content_type' => $contentType));
@@ -72,21 +94,11 @@ class FeedsMapperMediaTestCase extends FeedsMapperTestCase {
     );
     $this->drupalPost('admin/structure/feeds/edit/node/settings', $edit, 'Save');
 
-    // Import
+    // Import.
     $edit = array(
       'feeds[FeedsHTTPFetcher][source]' => url('testing/media_feeds/feed.csv', array('absolute' => TRUE)),
     );
     $this->drupalPost('import/node', $edit, 'Import');
     $this->assertText('Created 1 node');
-
-    // Assert: Media correctly attached
-    $entities = db_select('feeds_item')
-      ->fields('feeds_item', array('entity_id'))
-      ->condition('id', 'node')
-      ->execute();
-    foreach ($entities as $entity) {
-      $this->drupalGet('node/' . $entity->entity_id . '/edit');
-      $this->assertRaw('sample.png');
-    }
   }
 }
