@@ -34,7 +34,7 @@ class FeedsMapperMediaTestCase extends FeedsMapperTestCase {
    * Basic test importing a sample feed.
    */
   public function test() {
-    // Create a user with the appropriate permissions
+    // Create a user with the appropriate permissions.
     $this->drupalLogin($this->drupalCreateUser(
       array(
         'administer content types',
@@ -48,10 +48,10 @@ class FeedsMapperMediaTestCase extends FeedsMapperTestCase {
       )
     ));
     
-    // Import sample feed
+    // Import a sample feed.
     $this->importSampleFeed();
     
-    // Assert: Media correctly attached
+    // Assert: Media correctly attached.
     $entities = db_select('feeds_item')
       ->fields('feeds_item', array('entity_id'))
       ->condition('id', 'node')
@@ -59,6 +59,37 @@ class FeedsMapperMediaTestCase extends FeedsMapperTestCase {
     foreach ($entities as $entity) {
       $this->drupalGet('node/' . $entity->entity_id . '/edit');
       $this->assertRaw('sample.png');
+    }
+  }
+
+  /**
+   * Basic test importing a sample feed without the appropriate permissions.
+   */
+  public function testPermissionCheck() {
+    // Create a user without the add media from remote sources permission.
+    $this->drupalLogin($this->drupalCreateUser(
+      array(
+        'administer content types',
+        'administer feeds',
+        'access content',
+        'import media',
+        'view media',
+        'edit media',
+        'bypass node access',
+      )
+    ));
+
+    // Import a sample feed.
+    $this->importSampleFeed();
+
+    // Assert: Media not attached.
+    $entities = db_select('feeds_item')
+      ->fields('feeds_item', array('entity_id'))
+      ->condition('id', 'node')
+      ->execute();
+    foreach ($entities as $entity) {
+      $this->drupalGet('node/' . $entity->entity_id . '/edit');
+      $this->assertNoRaw('sample.png');
     }
   }
 
