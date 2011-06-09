@@ -25,6 +25,20 @@ class FeedsMapperMediaTestCase extends FeedsMapperTestCase {
   public function setUp() {
     // Call parent setup with the required module
     parent::setUp(array('media_feeds', 'media_feeds_test'));
+
+    // Create user and login
+    $this->drupalLogin($this->drupalCreateUser(
+      array(
+        'administer content types',
+        'administer feeds',
+        'access content',
+        'add media from remote sources',
+        'import media',
+        'view media',
+        'edit media',
+        'bypass node access',
+      )
+    ));
   }
 
   /**
@@ -64,5 +78,15 @@ class FeedsMapperMediaTestCase extends FeedsMapperTestCase {
     );
     $this->drupalPost('import/node', $edit, 'Import');
     $this->assertText('Created 1 node');
+
+    // Assert: Media correctly attached
+    $entities = db_select('feeds_item')
+      ->fields('feeds_item', array('entity_id'))
+      ->condition('id', 'node')
+      ->execute();
+    foreach ($entities as $entity) {
+      $this->drupalGet('node/' . $entity->entity_id . '/edit');
+      $this->assertRaw('sample.png');
+    }
   }
 }
