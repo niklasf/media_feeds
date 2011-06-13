@@ -18,7 +18,7 @@ class FeedsMapperMediaEnclosureTestCase extends FeedsMapperTestCase {
   public static function getInfo() {
     return array(
       'name' => 'Mapper: Media (from FeedsEncolsure)',
-      'description' => 'Test Feeds Mapper support for Media fields using FeedsEnclosure as the source.',
+      'description' => 'Test Feeds Mapper support for Media fields using FeedsEnclosure as the source. <strong>Requires SimplePie library</strong>.',
       'group' => 'Feeds',
       'dependencies' => array('media_feeds'),
     );
