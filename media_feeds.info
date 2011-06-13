@@ -5,3 +5,4 @@ package = Media
 dependencies[] = feeds
 dependencies[] = media_internet
 files[] = tests/media_feeds_mapper.test
+files[] = tests/media_feeds_mapper_enclosure.test
