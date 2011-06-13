@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Test case for the Feeds mapping API for the media module. 
+ * Test case for the Feeds mapping API for the media module.
  */
 
 /**
@@ -47,10 +47,10 @@ class FeedsMapperMediaTestCase extends FeedsMapperTestCase {
         'bypass node access',
       )
     ));
-    
+
     // Import a sample feed.
     $this->importSampleFeed();
-    
+
     // Assert: Media correctly attached.
     $entities = db_select('feeds_item')
       ->fields('feeds_item', array('entity_id'))

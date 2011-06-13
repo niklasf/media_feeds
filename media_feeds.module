@@ -122,7 +122,7 @@ function media_feeds_set_internet_target($source, $entity, $target, $values) {
         drupal_set_message(t('Failed to save file.'));
         continue;
       }
-      
+
       // Apply author settings to the file
       if ((empty($file->uid) && !empty($entity->uid)) || $file->uid != $entity->uid) {
         $file->uid = $entity->uid;
