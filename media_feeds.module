@@ -49,6 +49,11 @@ function media_feeds_set_internet_target($source, $entity, $target, $values) {
 
   foreach ($values as $value) {
     try {
+      // Explicit support for FeedsEnclosure.
+      if ($value instanceof FeedsEnclosure) {
+        $value = $value->getValue();
+      }
+
       // Find a provider to create a file object
       $provider = media_internet_get_provider($value);
       $file = $provider->getFileObject();
