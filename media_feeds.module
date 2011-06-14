@@ -51,40 +51,16 @@ function media_feeds_set_internet_target($source, $entity, $target, $values) {
     try {
       // Find a provider to create a file object
       $provider = media_internet_get_provider($value);
+
+      // Wrap the provider to use some workarounds
+      $provider = new MediaFeedsProviderWrapper($provider);
+
+      // Validate and get a file object
+      $provider->validate();
       $file = $provider->getFileObject();
-
-      // If existing files are found update the first file with the same URI
-      if ($file) {
-        $query = new EntityFieldQuery();
-        $existing = $query
-          ->entityCondition('entity_type', 'file')
-          ->propertyCondition('uri', $file->uri)
-          ->execute();
-
-        if ($existing && isset($existing['file']) && is_array($existing['file'])) {
-          foreach ($existing['file'] as $fid => $object) {
-            $file->fid = $object->fid;
-            $file->is_new = FALSE;
-            break;
-          }
-        }
-      }
-
-      // Existing providers fail validation if files already exist.
-      // That is bad because now we can't validate existing files.
-      // However, most providers don't do anything else in validate.
-      // @todo: Solve this. If this problem is solved we can and should call
-      // validate before the first $provider->getFileObject() even if the
-      // file is existing.
-      // There is an issue for this in the media module's issue queue:
-      // http://drupal.org/node/1121808
-      if (!$file || $file->is_new) {
-        $provider->validate();
-        $file = $provider->getFileObject();
-        if (!$file) {
-          // This file failed. Do the next.
-          continue;
-        }
+      if (!$file) {
+        drupal_set_message(t('Failed to get the file object.'));
+        continue;
       }
 
       // Look for the field instance settings
@@ -119,14 +95,16 @@ function media_feeds_set_internet_target($source, $entity, $target, $values) {
       // Save file
       $file = $provider->save();
       if (!$file) {
-        drupal_set_message(t('Failed to save file.'));
+        drupal_set_message(t('Failed to save the file.'), 'error');
         continue;
       }
 
       // Apply author settings to the file
       if ((empty($file->uid) && !empty($entity->uid)) || $file->uid != $entity->uid) {
         $file->uid = $entity->uid;
-        $file = file_save($file);
+        if (!file_save($file)) {
+          drupal_set_message(t('Failed to apply the author settings to the file.'), 'warning');
+        }
       }
 
       // Attach the file to the field
@@ -139,4 +117,16 @@ function media_feeds_set_internet_target($source, $entity, $target, $values) {
   }
 
   $entity->{$target} = $field;
+}
+
+/**
+ * Implements hook_file_presave().
+ */
+function media_feeds_file_presave($file) {
+  if (class_exists('MediaFeedsProviderWrapper', FALSE)) {
+    if (MediaFeedsProviderWrapper::$currentExistingFile) {
+      $file->fid = MediaFeedsProviderWrapper::$currentExistingFile;
+      $file->is_new = FALSE;
+    }
+  }
 }
