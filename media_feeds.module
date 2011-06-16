@@ -6,6 +6,26 @@
  */
 
 /**
+ * Implements hook_feeds_plugins().
+ */
+function media_feeds_feeds_plugins() {
+  $info = array(
+    'MediaFeedsFileProcessor' => array(
+      'name' => 'File processor',
+      'description' => 'Create and update files.',
+      'help' => 'Create and update files from parsed content.',
+      'handler' => array(
+        'parent' => 'FeedsProcessor',
+        'class' => 'MediaFeedsFileProcessor',
+        'file' => 'MediaFeedsFileProcessor.inc',
+        'path' => drupal_get_path('module', 'media_feeds') . '/includes',
+      ),
+    ),
+  );
+  return $info;
+}
+
+/**
  * Implements hook_feeds_processor_targets_alter().
  */
 function media_feeds_feeds_processor_targets_alter(&$targets, $entity_type, $bundle_name) {
