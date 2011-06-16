@@ -8,7 +8,7 @@
 /**
  * Class for testing the Media Feeds media_internet mapper.
  */
-class FeedsMapperMediaTestCase extends FeedsMapperTestCase {
+class MediaFeedsMapperMediaTestCase extends FeedsMapperTestCase {
 
   /**
    * Add this test case to the Feeds group.
@@ -17,7 +17,7 @@ class FeedsMapperMediaTestCase extends FeedsMapperTestCase {
     return array(
       'name' => 'Mapper: Media',
       'description' => 'Test Feeds Mapper support for Media fields.',
-      'group' => 'Feeds',
+      'group' => 'Media Feeds',
       'dependencies' => array('media_feeds'),
     );
   }

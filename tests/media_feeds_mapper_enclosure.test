@@ -10,7 +10,7 @@
  * Class for testing the Media Feeds media_internet mapper using
  * FeedsEnclosure.
  */
-class FeedsMapperMediaEnclosureTestCase extends FeedsMapperTestCase {
+class MediaFeedsMapperEnclosureTestCase extends FeedsMapperTestCase {
 
   /**
    * Add this test case to the Feeds group.
@@ -19,7 +19,7 @@ class FeedsMapperMediaEnclosureTestCase extends FeedsMapperTestCase {
     return array(
       'name' => 'Mapper: Media (from FeedsEncolsure)',
       'description' => 'Test Feeds Mapper support for Media fields using FeedsEnclosure as the source. <strong>Requires SimplePie library</strong>.',
-      'group' => 'Feeds',
+      'group' => 'Media Feeds',
       'dependencies' => array('media_feeds'),
     );
   }
