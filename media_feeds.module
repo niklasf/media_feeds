@@ -49,7 +49,7 @@ function media_feeds_set_internet_target($source, $entity, $target, $values) {
 
   foreach ($values as $value) {
     try {
-      // Explicit support for FeedsEnclosure.
+      // Explicit support for FeedsEnclosure
       if ($value instanceof FeedsEnclosure) {
         $value = $value->getValue();
       }
