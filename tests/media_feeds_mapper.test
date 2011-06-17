@@ -63,37 +63,6 @@ class MediaFeedsMapperMediaTestCase extends FeedsMapperTestCase {
   }
 
   /**
-   * Basic test importing a sample feed without the appropriate permissions.
-   */
-  public function testPermissionCheck() {
-    // Create a user without the add media from remote sources permission.
-    $this->drupalLogin($this->drupalCreateUser(
-      array(
-        'administer content types',
-        'administer feeds',
-        'access content',
-        'import media',
-        'view media',
-        'edit media',
-        'bypass node access',
-      )
-    ));
-
-    // Import a sample feed.
-    $this->importSampleFeed();
-
-    // Assert: Media not attached.
-    $entities = db_select('feeds_item')
-      ->fields('feeds_item', array('entity_id'))
-      ->condition('id', 'node')
-      ->execute();
-    foreach ($entities as $entity) {
-      $this->drupalGet('node/' . $entity->entity_id . '/edit');
-      $this->assertNoRaw('sample.png');
-    }
-  }
-
-  /**
    * Creates a content type with a media field, a feed importer and imports
    * a sample feed.
    */

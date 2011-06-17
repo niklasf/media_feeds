@@ -20,7 +20,7 @@ function media_feeds_feeds_processor_targets_alter(&$targets, $entity_type, $bun
       $targets[$name] = array(
         'name' => t('@label (media_internet)', array('@label' => $instance['label'])),
         'callback' => 'media_feeds_set_internet_target',
-        'description' => t('The @label field of the node. Value to be claimed by a Media Internet Sources provider.', array('@label' => $instance['label'])),
+        'description' => t('The @label field of the node. Value to be claimed by a Media Internet Sources provider. Be careful! The importing user will not need the @permission permission.', array('@label' => $instance['label'], '@permission' => 'add media from remote sources')),
       );
     }
   }
@@ -37,11 +37,6 @@ function media_feeds_set_internet_target($source, $entity, $target, $values) {
 
   if (!is_array($values)) {
     $values = array($values);
-  }
-
-  if (!user_access('add media from remote sources')) {
-    drupal_set_message(t('You are not aloud to import media from remote sources.'), 'error');
-    return;
   }
 
   $field_info = field_info_field($target);
