@@ -99,7 +99,7 @@ class MediaFeedsMapperMediaTestCase extends FeedsMapperTestCase {
    */
   public function importSampleFeed() {
     // Create a content type with a media field.
-    $contentType = $this->createContentType(NULL, array(
+    $contentType = $this->createContentType(array(), array(
       'alpha' => array(
         'type' => 'media',
         'widget' => 'media_generic',
