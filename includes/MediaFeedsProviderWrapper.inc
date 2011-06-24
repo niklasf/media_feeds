@@ -65,7 +65,7 @@ class MediaFeedsProviderWrapper extends MediaInternetBaseHandler {
    * (http://drupal.org/node/1121808).
    */
   public function validate() {
-    if (!$this->getExistingFile()) {    
+    if (!$this->getExistingFile()) {
       return $this->provider->validate();
     }
   }
@@ -79,7 +79,7 @@ class MediaFeedsProviderWrapper extends MediaInternetBaseHandler {
    *
    * See for example: Trying to add the same YouTube URL twice causes a primary
    * key violation (http://drupal.org/node/952422).
-   * 
+   *
    * Instead of skipping those files (by failing validation) we must work
    * around that issue.
    */
