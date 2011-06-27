@@ -11,8 +11,8 @@ Issue queue:
 
 -- REQUIREMENTS --
 
- * media
- * feeds
+ * Media
+ * Feeds
 
 -- INSTALLATION --
 
