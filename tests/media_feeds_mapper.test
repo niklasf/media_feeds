@@ -11,7 +11,7 @@
 class MediaFeedsMapperMediaTestCase extends FeedsMapperTestCase {
 
   /**
-   * Add this test case to the Feeds group.
+   * Add this test case to the Media Feeds group.
    */
   public static function getInfo() {
     return array(
@@ -26,7 +26,7 @@ class MediaFeedsMapperMediaTestCase extends FeedsMapperTestCase {
    * Set up the required modules.
    */
   public function setUp() {
-    // Call parent setup with the required module
+    // Call parent setup with the required modules.
     parent::setUp(array('media_feeds', 'media_feeds_test'));
   }
 

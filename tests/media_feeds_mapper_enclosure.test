@@ -13,7 +13,7 @@
 class MediaFeedsMapperEnclosureTestCase extends FeedsMapperTestCase {
 
   /**
-   * Add this test case to the Feeds group.
+   * Add this test case to the Media Feeds group.
    */
   public static function getInfo() {
     return array(
@@ -45,6 +45,7 @@ class MediaFeedsMapperEnclosureTestCase extends FeedsMapperTestCase {
       )
     ));
   }
+
   /**
    * Test importing.
    */
