@@ -4,10 +4,10 @@ The Media Feeds module integrates media into feeds. That means you can map any
 supported source to a media field.
 
 Project page:
-  http://drupal.org/sandbox/niklas/1150302
+  http://drupal.org/project/media_feeds
 
 Issue queue:
-  http://drupal.org/project/issues/1150302
+  http://drupal.org/project/issues/media_feeds
 
 -- REQUIREMENTS --
 
