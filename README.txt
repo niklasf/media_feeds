@@ -34,6 +34,12 @@ notice that you can now select that field as a target.
 
 -- CONTACT --
 
-Currently maintained by Niklas Fiekas:
-  http://drupal.org/user/1089248
-  niklas.fiekas@googlemail.com
+Currently maintained by:
+
+ * Niklas Fiekas
+   http://drupal.org/user/1089248
+   niklas.fiekas@googlemail.com
+
+ * Kevin Reynen
+   http://drupal.org/user/48877
+   kreynen@gmail.com
