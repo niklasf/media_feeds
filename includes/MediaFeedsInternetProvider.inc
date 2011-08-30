@@ -6,10 +6,11 @@
  */
 
 /**
- * Wraps a media_internet provider to provide workarounds for some issues. As
- * the issues get fixed the workarounds can be removed.
+ * Wraps a media_internet provider to implement the interface of
+ * MediaFeedsProvider and provide workarounds for some issues. As the issues
+ * get fixed the workarounds can be removed.
  */
-class MediaFeedsProviderWrapper extends MediaInternetBaseHandler {
+class MediaFeedsInternetProvider extends MediaFeedsProvider {
 
   protected $provider;
 
@@ -19,8 +20,9 @@ class MediaFeedsProviderWrapper extends MediaInternetBaseHandler {
    * @param $provider
    *   The media_internet provider to wrap for workarounds.
    */
-  public function __construct($provider) {
-    $this->provider = $provider;
+  public function __construct($value, $config = array()) {
+    parent::__construct($value, $config);
+    $this->provider = media_internet_get_provider($this->value);
   }
 
   private $existingFile = NULL;
@@ -110,13 +112,5 @@ class MediaFeedsProviderWrapper extends MediaInternetBaseHandler {
     $file = $this->provider->save();
     self::$currentExistingFile = FALSE;
     return $file;
-  }
-
-  public function postSave(&$file_obj) {
-    return $this->provider->postSave($file_obj);
-  }
-
-  public function preSave(&$file_obj) {
-    return $this->provider->preSave($file_obj);
   }
 }
