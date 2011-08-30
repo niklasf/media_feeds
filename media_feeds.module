@@ -27,6 +27,8 @@ function media_feeds_feeds_processor_targets_alter(&$targets, $entity_type, $bun
         'name' => t('@label (by filename from library)', array('@label' => $instance['label'])),
         'callback' => 'media_feeds_set_target',
         'description' => t('The @label field of the node. Value is a filename existing in the Media library. The importing user will not need the permission to access existing files.', array('@label' => $instance['label'])),
+        'summary_callback' => 'MediaFeedsLibraryProvider::summaryCallback',
+        'form_callback' => 'MediaFeedsLibraryProvider::formCallback',
       );
     }
   }
