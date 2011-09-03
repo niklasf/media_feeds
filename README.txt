@@ -1,40 +1,25 @@
--- SUMMARY --
 
-The Media Feeds module integrates media into feeds. That means you can map any
+The Media Feeds module integrates Media into Feeds. That means you can map any
 supported source to a media field.
 
-Project page:
-  http://drupal.org/project/media_feeds
+Installation
+------------
 
-Issue queue:
-  http://drupal.org/project/issues/media_feeds
+Media and Feeds module are required. You can also install media_internet
+provider modules, if you need more sources than the basic ones. For example
+media_youtube.
 
--- REQUIREMENTS --
+Note that there are also parsers for feeds that might be useful. For example
+feeds_youtube.
 
- * Media
- * Feeds
-
--- INSTALLATION --
-
- * Install just like any other module.
-   
-   See:
-     http://drupal.org/documentation/install/modules-themes/modules-7
-
- * You can install available media_internet provider modules, if you need more
-   sources than the basic ones. For example media_youtube.
-
- * Note that there are also parsers for feeds that might be
-   useful. For example feeds_youtube.
-
--- CONFIGURATION --
+Usage
+-----
 
 Create your feed importer as you use to. If your target is a media field you'll
 notice that you can now select that field as a target.
 
--- CONTACT --
-
-Currently maintained by:
+Maintainers
+-----------
 
  * Niklas Fiekas
    http://drupal.org/user/1089248
