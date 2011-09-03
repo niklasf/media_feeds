@@ -1,4 +1,4 @@
-name = Media Feeds integration
+name = Media Feeds
 description = Enable mapping imported sources to media fields.
 core = 7.x
 package = Media
